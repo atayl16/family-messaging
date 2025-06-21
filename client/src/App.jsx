@@ -41,7 +41,9 @@ function App() {
       if (subscription) {
         subscription.unsubscribe();
       }
-      setSubscription(createSubscription(room.id));
+      if (currentUser) {
+        setSubscription(createSubscription(room.id, currentUser));
+      }
     });
   };
 
@@ -90,9 +92,9 @@ function App() {
     }
   };
 
-  const createSubscription = (roomId) => {
+  const createSubscription = (roomId, user) => {
     return CableApp.cable.subscriptions.create(
-      { channel: 'ChatChannel', room_id: roomId, user_id: currentUser.id },
+      { channel: 'ChatChannel', room_id: roomId, user_id: user.id },
       {
         received: handleReceivedMessage,
       }
