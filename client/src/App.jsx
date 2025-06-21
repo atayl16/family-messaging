@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import './App.css';
 import RoomList from './components/RoomList';
@@ -101,8 +101,9 @@ function App() {
     );
   };
 
-  const handleReceivedMessage = (message) => {
+  const handleReceivedMessage = useCallback((message) => {
     setActiveRoom(prevRoom => {
+      if (!prevRoom) return prevRoom;
       // Ensure we don't add duplicate messages
       if (prevRoom.messages.find(m => m.id === message.id)) {
         return prevRoom;
@@ -112,7 +113,7 @@ function App() {
         messages: [...prevRoom.messages, message]
       };
     });
-  };
+  }, []);
 
   if (!currentUser) {
     return (
