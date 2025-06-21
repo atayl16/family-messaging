@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
 import './App.css';
 import RoomList from './components/RoomList';
@@ -13,7 +13,7 @@ function App() {
   const [rooms, setRooms] = useState([]);
   const [userRooms, setUserRooms] = useState([]);
   const [activeRoom, setActiveRoom] = useState(null);
-  const [subscription, setSubscription] = useState(null);
+  const subscription = useRef(null);
 
   useEffect(() => {
     const savedUser = localStorage.getItem('currentUser');
@@ -38,11 +38,11 @@ function App() {
     setActiveRoom(null); // Reset active room to show loading
     axios.get(`${API_URL}/rooms/${room.id}`).then(response => {
       setActiveRoom(response.data);
-      if (subscription) {
-        subscription.unsubscribe();
+      if (subscription.current) {
+        subscription.current.unsubscribe();
       }
       if (currentUser) {
-        setSubscription(createSubscription(room.id, currentUser));
+        subscription.current = createSubscription(room.id, currentUser);
       }
     });
   };
@@ -62,7 +62,7 @@ function App() {
       user_id: currentUser.id,
       content: content
     };
-    subscription.perform('speak', message);
+    subscription.current.perform('speak', message);
   };
 
   const handleJoinRoom = async (roomId) => {
