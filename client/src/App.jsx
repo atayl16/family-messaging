@@ -6,7 +6,7 @@ import ChatRoom from './components/ChatRoom';
 import Login from './components/Login';
 import CableApp from './cable';
 
-const API_URL = 'https://family-messaging-b43098fd5fb4.herokuapp.com';
+const API_URL = 'https://family-messaging.onrender.com';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);

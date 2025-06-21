@@ -1,6 +1,6 @@
 import actionCable from 'actioncable';
 
-const CABLE_URL = 'wss://family-messaging-b43098fd5fb4.herokuapp.com/cable';
+const CABLE_URL = 'wss://family-messaging.onrender.com/cable';
 
 const cable = actionCable.createConsumer(CABLE_URL);
 
