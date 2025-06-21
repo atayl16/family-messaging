@@ -1,6 +1,13 @@
 class ChatChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "chat_room_#{params[:room]}"
+    room = Room.find(params[:room_id])
+    self.current_user = User.find(params[:user_id])
+
+    if room && current_user
+      stream_for room
+    else
+      reject
+    end
   end
 
   def unsubscribed
@@ -9,9 +16,9 @@ class ChatChannel < ApplicationCable::Channel
 
   def speak(data)
     Message.create!(
-      room_id: params[:room],
+      room_id: data['room_id'],
       user_id: data['user_id'],
-      content: data['message']
+      content: data['content']
     )
   end
 end

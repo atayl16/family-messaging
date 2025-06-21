@@ -3,8 +3,8 @@ module ApplicationCable
     identified_by :current_user
 
     def connect
-      self.current_user = find_verified_user
-      # reject_unauthorized_connection unless ip_allowed?
+      # No longer authenticating here.
+      # The user will be found and assigned in the channel.
     end
 
     private
