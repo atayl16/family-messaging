@@ -1,0 +1,107 @@
+/* Cache-busting comment */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+  font-family: 'Press Start 2P', cursive;
+  background-image: url('./assets/bg-texture.jpg');
+  background-size: 64px 64px;
+  background-repeat: repeat;
+  color: #fff;
+  text-shadow: 2px 2px #3c3c3c;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.App {
+  text-align: center;
+}
+
+.app-header {
+  margin-bottom: 2rem;
+}
+
+.app-body {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.room-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.room-list li {
+  padding: 0.5rem 1rem;
+  border: 2px solid #000;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  background-color: #7d7d7d;
+  box-shadow: inset -2px -2px 0px 0px #3c3c3c, inset 2px 2px 0px 0px #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.room-list li:hover {
+  background-color: #a0a0a0;
+  flex-grow: 1;
+}
+
+.chat-room {
+  flex-grow: 1;
+}
+
+.chat-room .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.message-list {
+  height: 400px;
+  overflow-y: auto;
+  text-align: left;
+  padding: 1rem;
+  border: 2px solid #000;
+  background-color: rgba(0, 0, 0, 0.2);
+  margin-bottom: 1rem;
+}
+
+.message {
+  margin-bottom: 0.5rem;
+}
+
+.message-user {
+  font-weight: bold;
+}
+
+.no-room-selected {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+input[type="text"],
+input[type="password"] {
+  background-color: #3c3c3c;
+  border: 2px solid #000;
+  box-shadow: inset -2px -2px 0px 0px #222, inset 2px 2px 0px 0px #555;
+  color: #fff;
+  padding: 0.5rem;
+  font-family: 'Press Start 2P', cursive;
+  width: 100%;
+}
