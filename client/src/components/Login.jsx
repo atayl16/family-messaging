@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-const API_URL = 'https://family-messaging-b43098fd5fb4.herokuapp.com';
+const API_URL = 'https://family-messaging.onrender.com';
 
 function Login({ onLogin }) {
   const [username, setUsername] = useState('');
