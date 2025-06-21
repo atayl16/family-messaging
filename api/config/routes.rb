@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+  root to: proc { [200, {}, ['OK']] }
+
   resources :users, only: [:create, :index] do
     get :rooms, on: :member
   end
