@@ -1,6 +1,6 @@
 import React from 'react';
 
-function RoomList({ rooms, userRooms, onSelectRoom, onCreateRoom, onJoinRoom }) {
+function RoomList({ currentUser, rooms, userRooms, onSelectRoom, onCreateRoom, onJoinRoom, onDeleteRoom }) {
   const [newRoomName, setNewRoomName] = React.useState('');
 
   const handleCreateRoom = (e) => {
@@ -14,6 +14,12 @@ function RoomList({ rooms, userRooms, onSelectRoom, onCreateRoom, onJoinRoom }) 
     return userRooms && userRooms.some(userRoom => userRoom.id === roomId);
   };
 
+  const handleDeleteClick = (roomId, roomName) => {
+    if (window.confirm(`Are you sure you want to delete the room "${roomName}"?`)) {
+      onDeleteRoom(roomId);
+    }
+  };
+
   return (
     <div className="card">
       <h2 className="card-header">Rooms</h2>
@@ -21,7 +27,12 @@ function RoomList({ rooms, userRooms, onSelectRoom, onCreateRoom, onJoinRoom }) 
         {rooms.map(room => (
           <li key={room.id}>
             {isUserInRoom(room.id) ? (
-              <span onClick={() => onSelectRoom(room)}>{room.name}</span>
+              <>
+                <span onClick={() => onSelectRoom(room)}>{room.name}</span>
+                {currentUser?.id === 1 && (
+                  <button className="button-delete" onClick={() => handleDeleteClick(room.id, room.name)}>X</button>
+                )}
+              </>
             ) : (
               <>
                 <span>{room.name}</span>

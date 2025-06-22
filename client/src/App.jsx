@@ -15,6 +15,11 @@ function App() {
   const [activeRoom, setActiveRoom] = useState(null);
   const subscription = useRef(null);
   const initialRoomLoaded = useRef(false);
+  const notificationSound = useRef(null);
+
+  useEffect(() => {
+    notificationSound.current = new Audio('/notification.mp3');
+  }, []);
 
   useEffect(() => {
     const savedUser = localStorage.getItem('currentUser');
@@ -120,6 +125,19 @@ function App() {
     }
   };
 
+  const handleDeleteRoom = async (roomId) => {
+    try {
+      await axios.delete(`${API_URL}/rooms/${roomId}`, { data: { user_id: currentUser.id } });
+      setRooms(rooms.filter(room => room.id !== roomId));
+      setUserRooms(userRooms.filter(room => room.id !== roomId));
+      if (activeRoom?.id === roomId) {
+        setActiveRoom(null);
+      }
+    } catch (error) {
+      console.error("Failed to delete room", error);
+    }
+  };
+
   const createSubscription = (roomId, user) => {
     return CableApp.cable.subscriptions.create(
       { channel: 'ChatChannel', room_id: roomId, user_id: user.id },
@@ -130,6 +148,9 @@ function App() {
   };
 
   const handleReceivedMessage = useCallback((message) => {
+    if (message.user_id !== currentUser?.id) {
+      notificationSound.current?.play().catch(error => console.error("Audio play failed", error));
+    }
     setActiveRoom(prevRoom => {
       if (!prevRoom) return prevRoom;
       // Ensure we don't add duplicate messages
@@ -141,7 +162,7 @@ function App() {
         messages: [...prevRoom.messages, message]
       };
     });
-  }, []);
+  }, [currentUser?.id]);
 
   if (!currentUser) {
     return (
@@ -158,11 +179,13 @@ function App() {
       </header>
       <div className="app-body">
         <RoomList
+          currentUser={currentUser}
           rooms={rooms}
           userRooms={userRooms}
           onSelectRoom={handleSelectRoom}
           onCreateRoom={handleCreateRoom}
           onJoinRoom={handleJoinRoom}
+          onDeleteRoom={handleDeleteRoom}
         />
         {activeRoom ? (
           <ChatRoom
