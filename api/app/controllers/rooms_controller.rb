@@ -6,7 +6,7 @@ class RoomsController < ApplicationController
 
   def show
     room = Room.find(params[:id])
-    render json: room.as_json(include: { messages: { include: :user } })
+    render json: room.as_json(include: [{ messages: { include: :user } }, :users])
   end
 
   def create
