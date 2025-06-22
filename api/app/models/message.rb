@@ -10,7 +10,7 @@ class Message < ApplicationRecord
   private
 
   def broadcast_message
-    ActionCable.server.broadcast("chat_room_#{room.id}", self.as_json(include: :user))
+    broadcast_to(room, self.as_json(include: :user))
   end
 
   def add_mentioned_users
