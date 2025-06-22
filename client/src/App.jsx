@@ -15,6 +15,11 @@ function App() {
   const [activeRoom, setActiveRoom] = useState(null);
   const subscription = useRef(null);
   const initialRoomLoaded = useRef(false);
+  const notificationSound = useRef(null);
+
+  useEffect(() => {
+    notificationSound.current = new Audio('/notification.mp3');
+  }, []);
 
   useEffect(() => {
     const savedUser = localStorage.getItem('currentUser');
@@ -130,6 +135,9 @@ function App() {
   };
 
   const handleReceivedMessage = useCallback((message) => {
+    if (message.user_id !== currentUser?.id) {
+      notificationSound.current?.play().catch(error => console.error("Audio play failed", error));
+    }
     setActiveRoom(prevRoom => {
       if (!prevRoom) return prevRoom;
       // Ensure we don't add duplicate messages
@@ -141,7 +149,7 @@ function App() {
         messages: [...prevRoom.messages, message]
       };
     });
-  }, []);
+  }, [currentUser?.id]);
 
   if (!currentUser) {
     return (
