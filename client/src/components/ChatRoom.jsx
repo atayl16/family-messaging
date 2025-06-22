@@ -65,7 +65,7 @@ function ChatRoom({ room, currentUser, onSendMessage, onLeaveRoom }) {
             </button>
             <MentionsInput
               value={messageInput}
-              onChange={(e) => setMessageInput(e.target.value)}
+              onChange={(event, newValue) => setMessageInput(newValue)}
               placeholder="Type a message or @mention a user..."
               className="mentions"
               onFocus={() => setShowEmojiPicker(false)}
