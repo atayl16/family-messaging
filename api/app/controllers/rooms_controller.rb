@@ -60,6 +60,12 @@ class RoomsController < ApplicationController
     head :ok
   end
 
+  def destroy
+    room = Room.find(params[:id])
+    room.destroy
+    head :no_content
+  end
+
   private
 
   def room_params
