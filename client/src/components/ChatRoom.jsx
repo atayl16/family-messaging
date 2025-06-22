@@ -1,17 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import EmojiPicker from 'emoji-picker-react';
-import { MentionsInput, Mention } from 'react-mentions';
-import './mention-styles.css';
 
 function ChatRoom({ room, currentUser, onSendMessage, onLeaveRoom }) {
   const [messageInput, setMessageInput] = useState('');
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const messagesEndRef = useRef(null);
-
-  const users = (room.users || []).map(user => ({
-    id: user.username,
-    display: user.username
-  }));
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -63,19 +56,13 @@ function ChatRoom({ room, currentUser, onSendMessage, onLeaveRoom }) {
             >
               😊
             </button>
-            <MentionsInput
+            <input
+              type="text"
               value={messageInput}
-              onChange={(event, newValue) => setMessageInput(newValue || '')}
-              placeholder="Type a message or @mention a user..."
-              className="mentions"
+              onChange={(e) => setMessageInput(e.target.value)}
+              placeholder="Type a message..."
               onFocus={() => setShowEmojiPicker(false)}
-            >
-              <Mention
-                trigger="@"
-                data={users}
-                className="mentions__mention"
-              />
-            </MentionsInput>
+            />
             <button className="button" type="submit">Send</button>
           </div>
         </form>
