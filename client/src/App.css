@@ -155,3 +155,9 @@ input[type="password"] {
 .button-delete:hover {
   background-color: #cc0000;
 }
+
+.emoji-picker-container,
+.emoji-picker-container * {
+    text-shadow: none;
+    color: black;
+}
