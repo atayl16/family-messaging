@@ -25,23 +25,19 @@ function RoomList({ currentUser, rooms, userRooms, onSelectRoom, onCreateRoom, o
       <div className="card">
         <h2 className="card-header">Rooms</h2>
         <ul className="room-list-ul card-body">
-          {rooms.map(room => (
-            <li key={room.id}>
-              {isUserInRoom(room.id) ? (
-                <>
-                  <span className="room-name" onClick={() => onSelectRoom(room)}>{room.name}</span>
-                  {currentUser?.id === 1 && (
-                    <button className="button-delete" onClick={() => handleDeleteClick(room.id, room.name)}>X</button>
-                  )}
-                </>
-              ) : (
-                <>
-                  <span className="room-name">{room.name}</span>
-                  <button className="button" onClick={() => onJoinRoom(room.id)}>Join</button>
-                </>
-              )}
-            </li>
-          ))}
+          {rooms.map(room => {
+            const userInRoom = isUserInRoom(room.id);
+            return (
+              <li key={room.id}>
+                <span className="room-name" onClick={() => userInRoom ? onSelectRoom(room) : onJoinRoom(room.id)}>
+                  {room.name}
+                </span>
+                {userInRoom && currentUser?.id === 1 && (
+                  <button className="button-delete" onClick={() => handleDeleteClick(room.id, room.name)}>X</button>
+                )}
+              </li>
+            );
+          })}
         </ul>
         <form onSubmit={handleCreateRoom} className="card-footer">
           <div className="form-group">
