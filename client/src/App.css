@@ -33,6 +33,11 @@ body {
   gap: 1rem;
 }
 
+.header-content h1 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
 .header-user-info {
   display: flex;
   align-items: center;
@@ -134,10 +139,12 @@ body {
 
 .message.sent {
   align-items: flex-end;
+  color: #88f;
 }
 
 .message.received {
   align-items: flex-start;
+  color: #f88;
 }
 
 .message-header {

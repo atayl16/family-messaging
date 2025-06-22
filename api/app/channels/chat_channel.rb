@@ -24,12 +24,23 @@ class ChatChannel < ApplicationCable::Channel
       return
     end
 
+    sanitized_content = sanitize_content(data['content'])
+
     Message.create!(
       room_id: data['room_id'],
       user_id: user_id,
-      content: data['content']
+      content: sanitized_content
     )
 
     Rails.cache.write("last_message_time_user_#{user_id}", Time.now, expires_in: 5.seconds)
+  end
+
+  private
+
+  def sanitize_content(content)
+    return content if PROFANITY_LIST.empty?
+
+    profanity_regex = Regexp.union(PROFANITY_LIST.map { |word| Regexp.new(Regexp.escape(word), Regexp::IGNORECASE) })
+    content.gsub(profanity_regex, '****')
   end
 end
