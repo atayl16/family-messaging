@@ -28,12 +28,15 @@ body {
   display: flex;
   gap: 1rem;
   align-items: flex-start;
+  flex-wrap: wrap;
 }
 
 .room-list {
   list-style: none;
   padding: 0;
   margin: 0;
+  background-color: #a0a0a0;
+  flex-grow: 1;
 }
 
 .room-list li {
@@ -55,6 +58,7 @@ body {
 
 .chat-room {
   flex-grow: 1;
+  min-width: 300px;
 }
 
 .chat-room .card-header {
@@ -64,13 +68,15 @@ body {
 }
 
 .message-list {
-  height: 400px;
+  min-height: 200px;
+  max-height: 60vh;
   overflow-y: auto;
   text-align: left;
   padding: 1rem;
   border: 2px solid #000;
   background-color: rgba(0, 0, 0, 0.2);
   margin-bottom: 1rem;
+  white-space: pre-wrap;
 }
 
 .message {
@@ -166,4 +172,14 @@ input[type="password"] {
 .emoji-picker-container * {
     text-shadow: none;
     color: black;
+}
+
+@media (max-width: 768px) {
+  .app-body {
+    flex-direction: column;
+  }
+
+  .room-list {
+    width: 100%;
+  }
 }
