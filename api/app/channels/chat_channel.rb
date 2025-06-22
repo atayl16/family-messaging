@@ -1,9 +1,9 @@
 class ChatChannel < ApplicationCable::Channel
   def subscribed
-    room = Room.find(params[:room_id])
-    self.current_user = User.find(params[:user_id])
+    room = Room.find_by(id: params[:room_id])
+    user = User.find_by(id: params[:user_id])
 
-    if room && current_user
+    if room && user
       stream_for room
     else
       reject
