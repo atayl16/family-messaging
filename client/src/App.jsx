@@ -13,6 +13,7 @@ function App() {
   const [rooms, setRooms] = useState([]);
   const [userRooms, setUserRooms] = useState([]);
   const [activeRoom, setActiveRoom] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const subscription = useRef(null);
   const initialRoomLoaded = useRef(false);
   const notificationSound = useRef(null);
@@ -173,11 +174,18 @@ function App() {
   return (
     <div className="App container">
       <header className="app-header">
-        <h1>Family Chat</h1>
-        <p>Welcome, {currentUser.username}!</p>
-        <button onClick={handleLogout} className="button-logout">Logout</button>
+        <div className="header-content">
+          <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="button-sidebar-toggle">
+            &#9776;
+          </button>
+          <h1>Family Chat</h1>
+        </div>
+        <div className="header-user-info">
+          <span>Welcome, {currentUser.username}!</span>
+          <button onClick={handleLogout} className="button-logout">Logout</button>
+        </div>
       </header>
-      <div className="app-body">
+      <div className={`app-body ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
         <RoomList
           currentUser={currentUser}
           rooms={rooms}
@@ -186,6 +194,7 @@ function App() {
           onCreateRoom={handleCreateRoom}
           onJoinRoom={handleJoinRoom}
           onDeleteRoom={handleDeleteRoom}
+          isSidebarOpen={isSidebarOpen}
         />
         {activeRoom ? (
           <ChatRoom

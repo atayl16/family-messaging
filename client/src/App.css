@@ -22,6 +22,29 @@ body {
 
 .app-header {
   margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.button-sidebar-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
 }
 
 .app-body {
@@ -34,8 +57,19 @@ body {
   list-style: none;
   padding: 0;
   margin: 0;
-  flex: 0 0 250px;
   background-color: #a0a0a0;
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.sidebar-open .room-list {
+  flex: 0 0 250px;
+  padding: 1rem;
+}
+
+.sidebar-closed .room-list {
+  flex: 0 0 0;
+  padding: 1rem 0;
 }
 
 .room-list li {

@@ -1,4 +1,6 @@
 import React from 'react';
+import Room from './Room';
+import CreateRoomForm from './CreateRoomForm';
 
 function RoomList({ currentUser, rooms, userRooms, onSelectRoom, onCreateRoom, onJoinRoom, onDeleteRoom }) {
   const [newRoomName, setNewRoomName] = React.useState('');
