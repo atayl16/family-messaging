@@ -150,7 +150,9 @@ function App() {
 
   const handleReceivedMessage = useCallback((message) => {
     if (message.user_id !== currentUser?.id) {
-      notificationSound.current?.play().catch(error => console.error("Audio play failed", error));
+      if (document.hidden) {
+        notificationSound.current?.play().catch(error => console.error("Audio play failed", error));
+      }
     }
     setActiveRoom(prevRoom => {
       if (!prevRoom) return prevRoom;
