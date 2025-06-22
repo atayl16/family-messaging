@@ -103,5 +103,61 @@ input[type="password"] {
   color: #fff;
   padding: 0.5rem;
   font-family: 'Press Start 2P', cursive;
-  width: 100%;
+  flex-grow: 1;
+}
+
+.card-footer {
+    position: relative;
+}
+
+.emoji-picker-container {
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    z-index: 10;
+}
+
+.message-form {
+    display: flex;
+}
+
+.button-emoji {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0 0.5rem;
+}
+
+.message.sent {
+  text-align: right;
+  color: #88f;
+}
+
+.message.received {
+  text-align: left;
+  color: #f88;
+}
+
+.button-delete {
+  background-color: #ff4d4d;
+  color: white;
+  border: 1px solid #ff4d4d;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  line-height: 18px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.button-delete:hover {
+  background-color: #cc0000;
+}
+
+.emoji-picker-container,
+.emoji-picker-container * {
+    text-shadow: none;
+    color: black;
 }

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     get :rooms, on: :member
   end
 
-  resources :rooms, only: [:index, :show, :create] do
+  resources :rooms, only: [:index, :show, :create, :destroy] do
     member do
       post :join
       delete :leave
