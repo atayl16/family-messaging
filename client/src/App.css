@@ -54,6 +54,8 @@ body {
 }
 
 .room-list {
+  display: flex;
+  flex-direction: column;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -64,7 +66,7 @@ body {
 
 .sidebar-open .room-list {
   flex: 0 0 250px;
-  padding: 1rem;
+  padding: 1rem 0;
 }
 
 .sidebar-closed .room-list {
@@ -72,12 +74,26 @@ body {
   padding: 1rem 0;
 }
 
+.room-list .card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.room-list-ul {
+  flex-grow: 1;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0 1rem;
+  margin: 0;
+}
+
 .room-list li {
   padding: 0.5rem 1rem;
   border: 2px solid #000;
   margin-bottom: 0.5rem;
   cursor: pointer;
-  background-color: #7d7d7d;
+  background-color: #a0a0a0;
   box-shadow: inset -2px -2px 0px 0px #3c3c3c, inset 2px 2px 0px 0px #fff;
   display: flex;
   justify-content: space-between;
