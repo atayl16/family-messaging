@@ -61,9 +61,15 @@ class RoomsController < ApplicationController
   end
 
   def destroy
-    room = Room.find(params[:id])
-    room.destroy
-    head :no_content
+    # For now, we'll consider user 1 the admin.
+    # NOTE: This is not secure. A proper authentication system should be implemented.
+    if params[:user_id].to_i == 1
+      room = Room.find(params[:id])
+      room.destroy
+      head :no_content
+    else
+      render json: { error: 'Unauthorized' }, status: :unauthorized
+    end
   end
 
   private

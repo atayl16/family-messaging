@@ -127,7 +127,7 @@ function App() {
 
   const handleDeleteRoom = async (roomId) => {
     try {
-      await axios.delete(`${API_URL}/rooms/${roomId}`);
+      await axios.delete(`${API_URL}/rooms/${roomId}`, { data: { user_id: currentUser.id } });
       setRooms(rooms.filter(room => room.id !== roomId));
       setUserRooms(userRooms.filter(room => room.id !== roomId));
       if (activeRoom?.id === roomId) {
@@ -179,6 +179,7 @@ function App() {
       </header>
       <div className="app-body">
         <RoomList
+          currentUser={currentUser}
           rooms={rooms}
           userRooms={userRooms}
           onSelectRoom={handleSelectRoom}
