@@ -128,6 +128,22 @@ body {
 
 .message {
   margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.message.sent {
+  align-items: flex-end;
+}
+
+.message.received {
+  align-items: flex-start;
+}
+
+.message-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.25rem;
 }
 
 .message-user {
@@ -141,12 +157,19 @@ body {
   word-break: break-all;
 }
 
+.message-timestamp {
+  font-size: 0.7rem;
+  color: #ccc;
+  margin-top: 0.25rem;
+}
+
 .no-room-selected {
   flex-grow: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 400px;
+  color: #f88;
 }
 
 .form-group {
@@ -197,16 +220,6 @@ input[type="password"] {
     font-size: 1.5rem;
     cursor: pointer;
     padding: 0 0.5rem;
-}
-
-.message.sent {
-  text-align: right;
-  color: #88f;
-}
-
-.message.received {
-  text-align: left;
-  color: #f88;
 }
 
 .button-delete {
