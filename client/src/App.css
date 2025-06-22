@@ -155,6 +155,11 @@ body {
   gap: 0.5rem;
 }
 
+.room-list .form-group {
+  flex-direction: column;
+  margin-bottom: 0;
+}
+
 input[type="text"],
 input[type="password"] {
   background-color: #3c3c3c;
