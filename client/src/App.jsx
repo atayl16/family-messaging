@@ -14,6 +14,7 @@ function App() {
   const [userRooms, setUserRooms] = useState([]);
   const [activeRoom, setActiveRoom] = useState(null);
   const subscription = useRef(null);
+  const initialRoomLoaded = useRef(false);
 
   useEffect(() => {
     const savedUser = localStorage.getItem('currentUser');
@@ -29,12 +30,39 @@ function App() {
     }
   }, [currentUser]);
 
+  useEffect(() => {
+    if (currentUser && rooms.length > 0 && !initialRoomLoaded.current) {
+      const savedRoomId = localStorage.getItem('activeRoomId');
+      if (savedRoomId) {
+        const roomToSelect = rooms.find(room => room.id === parseInt(savedRoomId));
+        if (roomToSelect) {
+            handleSelectRoom(roomToSelect);
+            initialRoomLoaded.current = true;
+        } else {
+            localStorage.removeItem('activeRoomId');
+        }
+      }
+    }
+  }, [rooms, currentUser]);
+
   const handleLogin = (user) => {
     setCurrentUser(user);
     localStorage.setItem('currentUser', JSON.stringify(user));
   };
 
+  const handleLogout = () => {
+    setCurrentUser(null);
+    setActiveRoom(null);
+    if (subscription.current) {
+      subscription.current.unsubscribe();
+      subscription.current = null;
+    }
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('activeRoomId');
+  };
+
   const handleSelectRoom = (room) => {
+    localStorage.setItem('activeRoomId', room.id);
     setActiveRoom(null); // Reset active room to show loading
     axios.get(`${API_URL}/rooms/${room.id}`).then(response => {
       setActiveRoom(response.data);
@@ -126,6 +154,7 @@ function App() {
       <header className="app-header">
         <h1>Family Chat</h1>
         <p>Welcome, {currentUser.username}!</p>
+        <button onClick={handleLogout} className="button-logout">Logout</button>
       </header>
       <div className="app-body">
         <RoomList
