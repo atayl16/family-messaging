@@ -1,8 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
+import EmojiPicker from 'emoji-picker-react';
+import { MentionsInput, Mention } from 'react-mentions';
+import './mention-styles.css';
 
-function ChatRoom({ room, user, onSendMessage, onLeaveRoom }) {
+function ChatRoom({ room, currentUser, onSendMessage, onLeaveRoom }) {
   const [messageInput, setMessageInput] = useState('');
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const messagesEndRef = useRef(null);
+
+  const users = room.users.map(user => ({
+    id: user.username,
+    display: user.username
+  }));
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -17,19 +26,11 @@ function ChatRoom({ room, user, onSendMessage, onLeaveRoom }) {
     if (messageInput.trim() === '') return;
     onSendMessage(messageInput);
     setMessageInput('');
+    setShowEmojiPicker(false);
   };
 
-  const parseEmojis = (text) => {
-    const emojiMap = {
-      '<3': '❤️',
-      ':)': '😊',
-      ':(': '😢',
-      ':D': '😃',
-      ';)': '😉',
-      ':P': '😛',
-    };
-    const regex = new RegExp(Object.keys(emojiMap).map(e => e.replace(/([()*+?^${}|[\]\\])/g, '\\$1')).join('|'), 'g');
-    return text.replace(regex, (match) => emojiMap[match]);
+  const onEmojiClick = (emojiObject) => {
+    setMessageInput(prevInput => prevInput + emojiObject.emoji);
   };
 
   return (
@@ -40,24 +41,45 @@ function ChatRoom({ room, user, onSendMessage, onLeaveRoom }) {
       </div>
       <div className="card-body message-list">
         {room.messages && room.messages.map((msg) => (
-          <div key={msg.id} className="message">
+          <div key={msg.id} className={`message ${msg.user_id === currentUser.id ? 'sent' : 'received'}`}>
             <span className="message-user">{msg.user?.username || 'User'}: </span>
-            <span className="message-content">{parseEmojis(msg.content)}</span>
+            <span className="message-content">{msg.content}</span>
           </div>
         ))}
         <div ref={messagesEndRef} />
       </div>
-      <form onSubmit={handleSendMessage} className="card-footer">
-        <div className="form-group">
-          <input
-            type="text"
-            value={messageInput}
-            onChange={(e) => setMessageInput(e.target.value)}
-            placeholder="Type a message..."
-          />
-          <button className="button" type="submit">Send</button>
-        </div>
-      </form>
+      <div className="card-footer">
+        {showEmojiPicker && (
+          <div className="emoji-picker-container">
+            <EmojiPicker onEmojiClick={onEmojiClick} />
+          </div>
+        )}
+        <form onSubmit={handleSendMessage} className="message-form">
+          <div className="form-group">
+            <button
+              type="button"
+              className="button-emoji"
+              onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+            >
+              😊
+            </button>
+            <MentionsInput
+              value={messageInput}
+              onChange={(e) => setMessageInput(e.target.value)}
+              placeholder="Type a message or @mention a user..."
+              className="mentions"
+              onFocus={() => setShowEmojiPicker(false)}
+            >
+              <Mention
+                trigger="@"
+                data={users}
+                className="mentions__mention"
+              />
+            </MentionsInput>
+            <button className="button" type="submit">Send</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

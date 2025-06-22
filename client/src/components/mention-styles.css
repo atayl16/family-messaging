@@ -1,0 +1,36 @@
+.mentions {
+  font-family: 'Press Start 2P', cursive;
+  width: 100%;
+}
+
+.mentions__input {
+  background-color: #3c3c3c;
+  border: 2px solid #000;
+  box-shadow: inset -2px -2px 0px 0px #222, inset 2px 2px 0px 0px #555;
+  color: #fff;
+  padding: 0.5rem;
+  font-family: 'Press Start 2P', cursive;
+  width: 100%;
+}
+
+.mentions__suggestions__list {
+  background-color: #f0f0f0;
+  border: 1px solid #b0b0b0;
+  font-size: 10px;
+  max-height: 150px;
+  overflow-y: auto;
+  position: absolute;
+  bottom: 100%; /* Position above the input */
+  z-index: 10;
+  text-shadow: none;
+  color: black;
+}
+
+.mentions__suggestions__item {
+  padding: 5px 15px;
+  cursor: pointer;
+}
+
+.mentions__suggestions__item--focused {
+  background-color: #d0d0d0;
+} 

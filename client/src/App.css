@@ -81,6 +81,12 @@ body {
   font-weight: bold;
 }
 
+.message-content {
+  overflow-wrap: break-word;
+  word-wrap: break-word; /* legacy name */
+  white-space: pre-wrap;
+}
+
 .no-room-selected {
   flex-grow: 1;
   display: flex;
