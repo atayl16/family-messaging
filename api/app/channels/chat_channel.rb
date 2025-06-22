@@ -15,10 +15,12 @@ class ChatChannel < ApplicationCable::Channel
   end
 
   def speak(data)
-    Message.create!(
+    message = Message.create!(
       room_id: data['room_id'],
       user_id: data['user_id'],
       content: data['content']
     )
+    room = Room.find(data['room_id'])
+    ChatChannel.broadcast_to(room, message)
   end
 end
