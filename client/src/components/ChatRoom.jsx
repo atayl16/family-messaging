@@ -8,7 +8,7 @@ function ChatRoom({ room, currentUser, onSendMessage, onLeaveRoom }) {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const messagesEndRef = useRef(null);
 
-  const users = room.users.map(user => ({
+  const users = (room.users || []).map(user => ({
     id: user.username,
     display: user.username
   }));
