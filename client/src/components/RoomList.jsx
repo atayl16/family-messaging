@@ -1,6 +1,6 @@
 import React from 'react';
 
-function RoomList({ rooms, userRooms, onSelectRoom, onCreateRoom, onJoinRoom }) {
+function RoomList({ currentUser, rooms, userRooms, onSelectRoom, onCreateRoom, onJoinRoom, onDeleteRoom }) {
   const [newRoomName, setNewRoomName] = React.useState('');
 
   const handleCreateRoom = (e) => {
@@ -21,7 +21,12 @@ function RoomList({ rooms, userRooms, onSelectRoom, onCreateRoom, onJoinRoom }) 
         {rooms.map(room => (
           <li key={room.id}>
             {isUserInRoom(room.id) ? (
-              <span onClick={() => onSelectRoom(room)}>{room.name}</span>
+              <>
+                <span onClick={() => onSelectRoom(room)}>{room.name}</span>
+                {currentUser?.id === 1 && (
+                  <button className="button-delete" onClick={() => onDeleteRoom(room.id)}>X</button>
+                )}
+              </>
             ) : (
               <>
                 <span>{room.name}</span>
