@@ -90,11 +90,39 @@ function App() {
       });
   };
 
+  const replaceTextEmojis = (text) => {
+    const emojiMap = {
+      ':)': '😊',
+      ':-)': '😊',
+      '<3': '❤️',
+      ':(': '😢',
+      ':-(': '😢',
+      ':D': '😃',
+      ':-D': '😃',
+      ';)': '😉',
+      ';-)': '😉',
+      ':P': '😛',
+      ':-P': '😛',
+      ':p': '😛',
+      ':-p': '😛',
+      ':o': '😮',
+      ':-o': '😮',
+      ":'(": '😭',
+    };
+
+    let newText = text;
+    for (const [smiley, emoji] of Object.entries(emojiMap)) {
+      newText = newText.split(smiley).join(emoji);
+    }
+    return newText;
+  };
+
   const handleSendMessage = (content) => {
+    const newContent = replaceTextEmojis(content);
     const message = {
       room_id: activeRoom.id,
       user_id: currentUser.id,
-      content: content
+      content: newContent,
     };
     subscription.current.perform('speak', message);
   };
